@@ -17,3 +17,7 @@ local.properties
 /.idea/misc.xml
 /.idea/vcs.xml
 /.idea/compiler.xml
+/.idea/saveactions_settings.xml
+/.idea/codeStyles/codeStyleConfig.xml
+/.idea/codeStyles/Project.xml
+/lint.xml
