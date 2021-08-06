@@ -60,4 +60,10 @@ public object Libs {
             "org.jetbrains.kotlin:kotlin-annotation-processing-gradle:_"
 
     public const val kotlin_gradle_plugin: String = "org.jetbrains.kotlin:kotlin-gradle-plugin:_"
+
+    public const val kotlinx_coroutines_android: String =
+            "org.jetbrains.kotlinx:kotlinx-coroutines-android:_"
+
+    public const val kotlinx_coroutines_core_jvm: String =
+            "org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:_"
 }

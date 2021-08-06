@@ -8,6 +8,9 @@ import dagger.hilt.android.AndroidEntryPoint
 import hu.ahomolya.androidbase.di.DiQualifiers.NavigationChannel
 import hu.ahomolya.androidbase.model.NavigationCommand
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -24,14 +27,12 @@ class NavHostActivity : AppCompatActivity() {
     }
 
     private fun listenToNavigationCommands() {
-        lifecycleScope.launchWhenStarted {
-            for (command in navigationChannel) {
-                when (command) {
-                    is NavigationCommand.Resource -> findNavController(R.id.nav_host_fragment).navigate(
-                        command.navigationId,
-                    )
+        lifecycleScope.launch {
+            navigationChannel
+                .receiveAsFlow()
+                .collect { action ->
+                    action.sendToNavController(findNavController(R.id.nav_host_fragment))
                 }
-            }
         }
     }
 }
