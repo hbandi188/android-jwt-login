@@ -33,6 +33,17 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
+        }
+    }
+
+    buildFeatures {
+        viewBinding true
+        dataBinding true
+    }
 }
 
 dependencies {
@@ -53,6 +64,13 @@ dependencies {
     testImplementation Libs.junit_junit
     testImplementation Libs.kotest_assertions_core
     testImplementation Libs.mockk
+    testImplementation Libs.robolectric
+    testImplementation Libs.junit_ktx
+    testImplementation Libs.hilt_android_testing
+    testImplementation Libs.espresso_core
+
+    kaptTest Libs.hilt_android_compiler
+
     androidTestImplementation Libs.androidx_test_ext_junit
     androidTestImplementation Libs.espresso_core
 }

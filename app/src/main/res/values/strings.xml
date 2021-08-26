@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">JWT Login</string>
     <string name="temp_fragment_title">🚧 Temp fragment 🚧</string>
+    <string name="login_title">Login</string>
 </resources>

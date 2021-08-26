@@ -30,6 +30,8 @@ public object Libs {
 
     public const val androidx_test_ext_junit: String = "androidx.test.ext:junit:_"
 
+    public const val junit_ktx: String = "androidx.test.ext:junit-ktx:_"
+
     public const val com_android_tools_build_gradle: String = "com.android.tools.build:gradle:_"
 
     public const val lint_gradle: String = "com.android.tools.lint:lint-gradle:_"
@@ -38,8 +40,12 @@ public object Libs {
 
     public const val hilt_android: String = "com.google.dagger:hilt-android:_"
 
+    public const val hilt_android_compiler: String = "com.google.dagger:hilt-android-compiler:_"
+
     public const val hilt_android_gradle_plugin: String =
             "com.google.dagger:hilt-android-gradle-plugin:_"
+
+    public const val hilt_android_testing: String = "com.google.dagger:hilt-android-testing:_"
 
     public const val hilt_compiler: String = "com.google.dagger:hilt-compiler:_"
 
@@ -49,8 +55,6 @@ public object Libs {
             "de.fayard.buildSrcLibs:de.fayard.buildSrcLibs.gradle.plugin:_"
 
     public const val kotest_assertions_core: String = "io.kotest:kotest-assertions-core:_"
-
-    public const val kotest_runner_junit5: String = "io.kotest:kotest-runner-junit5:_"
 
     public const val mockk: String = "io.mockk:mockk:_"
 
@@ -68,4 +72,6 @@ public object Libs {
 
     public const val kotlinx_coroutines_core_jvm: String =
             "org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:_"
+
+    public const val robolectric: String = "org.robolectric:robolectric:_"
 }
