@@ -47,6 +47,8 @@ android {
 }
 
 dependencies {
+    implementation project(":networking")
+
     implementation Libs.core_ktx
     implementation Libs.appcompat
     implementation Libs.material
