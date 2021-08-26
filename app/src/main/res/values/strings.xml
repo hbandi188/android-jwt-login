@@ -2,4 +2,7 @@
     <string name="app_name">JWT Login</string>
     <string name="temp_fragment_title">🚧 Temp fragment 🚧</string>
     <string name="login_title">Login</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="login_button">Login</string>
 </resources>
