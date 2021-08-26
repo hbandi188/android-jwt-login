@@ -52,6 +52,8 @@ public object Libs {
 
     public const val kotest_runner_junit5: String = "io.kotest:kotest-runner-junit5:_"
 
+    public const val mockk: String = "io.mockk:mockk:_"
+
     public const val junit_junit: String = "junit:junit:_"
 
     public const val org_jacoco_ant: String = "org.jacoco:org.jacoco.ant:_"

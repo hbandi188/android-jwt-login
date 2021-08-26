@@ -1,4 +1,4 @@
 <resources>
-    <string name="app_name">AndroidBase</string>
+    <string name="app_name">JWT Login</string>
     <string name="temp_fragment_title">🚧 Temp fragment 🚧</string>
 </resources>
