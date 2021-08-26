@@ -18,4 +18,9 @@ interface LoginViewModel {
      * Whether to enable the login button.
      */
     val enableLogin: StateFlow<Boolean>
+
+    /**
+     * Start login process. Will check if input is valid before proceeding.
+     */
+    fun login()
 }
