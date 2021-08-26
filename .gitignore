@@ -21,3 +21,5 @@ local.properties
 /.idea/codeStyles/codeStyleConfig.xml
 /.idea/codeStyles/Project.xml
 /lint.xml
+/.idea/encodings.xml
+/.idea/.name
