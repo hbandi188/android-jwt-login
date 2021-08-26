@@ -1,0 +1,21 @@
+package hu.ahomolya.androidbase.ui.login
+
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+
+interface LoginViewModel {
+    /**
+     * The current value of the username field.
+     */
+    val username: MutableStateFlow<String>
+
+    /**
+     * The current value of the password field.
+     */
+    val password: MutableStateFlow<String>
+
+    /**
+     * Whether to enable the login button.
+     */
+    val enableLogin: StateFlow<Boolean>
+}

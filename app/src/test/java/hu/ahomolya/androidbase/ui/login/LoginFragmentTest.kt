@@ -1,4 +1,4 @@
-package hu.ahomolya.androidbase.startup.impl
+package hu.ahomolya.androidbase.ui.login
 
 import android.text.InputType.TYPE_CLASS_TEXT
 import android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD
@@ -9,7 +9,7 @@ import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.espresso.matcher.ViewMatchers.Visibility.VISIBLE
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import dagger.hilt.android.testing.HiltAndroidTest
-import hu.ahomolya.androidbase.BaseTest
+import hu.ahomolya.androidbase.BaseRobolectricTest
 import hu.ahomolya.androidbase.R
 import io.kotest.matchers.collections.shouldContain
 import io.kotest.matchers.nulls.shouldNotBeNull
@@ -19,7 +19,7 @@ import org.junit.runner.RunWith
 
 @HiltAndroidTest
 @RunWith(AndroidJUnit4::class)
-class LoginFragmentTest : BaseTest() {
+class LoginFragmentTest : BaseRobolectricTest() {
     @Test
     fun `login page title should be present when starting app`() {
         activityRule.scenario.onActivity {

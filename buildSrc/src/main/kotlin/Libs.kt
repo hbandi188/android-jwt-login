@@ -18,6 +18,18 @@ public object Libs {
 
     public const val core_ktx: String = "androidx.core:core-ktx:_"
 
+    public const val databinding_adapters: String = "androidx.databinding:databinding-adapters:_"
+
+    public const val databinding_common: String = "androidx.databinding:databinding-common:_"
+
+    public const val databinding_compiler: String = "androidx.databinding:databinding-compiler:_"
+
+    public const val databinding_ktx: String = "androidx.databinding:databinding-ktx:_"
+
+    public const val databinding_runtime: String = "androidx.databinding:databinding-runtime:_"
+
+    public const val viewbinding: String = "androidx.databinding:viewbinding:_"
+
     public const val navigation_fragment_ktx: String =
             "androidx.navigation:navigation-fragment-ktx:_"
 
@@ -72,6 +84,9 @@ public object Libs {
 
     public const val kotlinx_coroutines_core_jvm: String =
             "org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:_"
+
+    public const val kotlinx_coroutines_test: String =
+            "org.jetbrains.kotlinx:kotlinx-coroutines-test:_"
 
     public const val robolectric: String = "org.robolectric:robolectric:_"
 }
