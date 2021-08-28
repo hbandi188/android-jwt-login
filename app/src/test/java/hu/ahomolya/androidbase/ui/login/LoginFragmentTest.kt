@@ -23,6 +23,7 @@ import io.mockk.clearAllMocks
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import org.hamcrest.CoreMatchers.not
 import org.junit.Before
@@ -39,6 +40,7 @@ class LoginFragmentTest : BaseRobolectricTest() {
         every { username } returns MutableStateFlow("")
         every { password } returns MutableStateFlow("")
         every { enableLogin } returns MutableStateFlow(false)
+        every { login() } returns Job()
     }
 
     @Before

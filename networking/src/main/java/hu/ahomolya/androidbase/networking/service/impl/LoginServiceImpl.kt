@@ -8,7 +8,7 @@ internal class LoginServiceImpl(
     private val loginApi: LoginApi,
     private val secretsProvider: SecretsProvider,
 ) : LoginService {
-    override fun login(username: String, password: String) {
+    override suspend fun login(username: String, password: String) {
         loginApi.login(username, password, "password", secretsProvider.getClientId())
     }
 }

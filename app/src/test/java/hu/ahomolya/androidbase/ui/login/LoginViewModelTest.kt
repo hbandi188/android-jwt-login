@@ -5,9 +5,9 @@ import hu.ahomolya.androidbase.ui.login.impl.LoginViewModelImpl
 import hu.ahomolya.androidbase.usecases.LoginUseCase
 import io.kotest.matchers.collections.shouldEndWith
 import io.kotest.matchers.shouldBe
+import io.mockk.coVerify
 import io.mockk.impl.annotations.InjectMockKs
 import io.mockk.impl.annotations.MockK
-import io.mockk.verify
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.SharingStarted.Companion.Eagerly
 import kotlinx.coroutines.flow.shareIn
@@ -43,7 +43,7 @@ class LoginViewModelTest : BaseUnitTest() {
 
         tested.login()
 
-        verify { loginUseCase.login("username", "password") }
+        coVerify { loginUseCase.login("username", "password") }
     }
 
     @Test

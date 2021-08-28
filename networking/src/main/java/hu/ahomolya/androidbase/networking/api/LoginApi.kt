@@ -7,7 +7,7 @@ import retrofit2.http.POST
 internal interface LoginApi {
     @POST
     @FormUrlEncoded
-    fun login(
+    suspend fun login(
         @Field("username") username: String,
         @Field("password") password: String,
         @Field("grant_type") grantType: String,

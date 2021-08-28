@@ -1,5 +1,6 @@
 package hu.ahomolya.androidbase.ui.login
 
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
@@ -24,5 +25,5 @@ interface LoginViewModel {
     /**
      * Start login process. Will check if input is valid before proceeding.
      */
-    fun login()
+    fun login(): Job
 }

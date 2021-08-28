@@ -2,9 +2,10 @@ package hu.ahomolya.androidbase.usecases.impl
 
 import hu.ahomolya.androidbase.BaseUnitTest
 import hu.ahomolya.androidbase.networking.service.LoginService
+import io.mockk.coVerify
 import io.mockk.impl.annotations.InjectMockKs
 import io.mockk.impl.annotations.MockK
-import io.mockk.verify
+import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Test
 
 class LoginUseCaseImplTest : BaseUnitTest() {
@@ -15,9 +16,9 @@ class LoginUseCaseImplTest : BaseUnitTest() {
     lateinit var tested: LoginUseCaseImpl
 
     @Test
-    fun `should invoke service when logging in`() {
+    fun `should invoke service when logging in`() = runBlockingTest {
         tested.login("username", "password")
 
-        verify { loginService.login("username", "password") }
+        coVerify { loginService.login("username", "password") }
     }
 }

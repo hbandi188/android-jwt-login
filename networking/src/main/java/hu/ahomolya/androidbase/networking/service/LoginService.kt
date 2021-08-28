@@ -7,5 +7,5 @@ interface LoginService {
     /**
      * Start the login process with the provided [username] and [password].
      */
-    fun login(username: String, password: String)
+    suspend fun login(username: String, password: String)
 }

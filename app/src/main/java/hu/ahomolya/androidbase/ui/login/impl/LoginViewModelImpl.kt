@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import hu.ahomolya.androidbase.ui.login.LoginViewModel
 import hu.ahomolya.androidbase.usecases.LoginUseCase
 import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class LoginViewModelImpl @Inject constructor(
@@ -16,7 +17,7 @@ class LoginViewModelImpl @Inject constructor(
         .stateIn(viewModelScope, SharingStarted.Eagerly, false)
     override val loginInProgress = MutableStateFlow(false)
 
-    override fun login() {
+    override fun login() = viewModelScope.launch {
         loginInProgress.value = true
         loginUseCase.login(username.value, password.value)
         loginInProgress.value = false

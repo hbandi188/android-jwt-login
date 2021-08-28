@@ -16,5 +16,6 @@ class LoginApiTest : BaseUnitTest() {
         LoginApi::login.parameters.any { param -> param.annotations.any { it is Field && it.value == "password" } } shouldBe true
         LoginApi::login.parameters.any { param -> param.annotations.any { it is Field && it.value == "grant_type" } } shouldBe true
         LoginApi::login.parameters.any { param -> param.annotations.any { it is Field && it.value == "client_id" } } shouldBe true
+        LoginApi::login.isSuspend shouldBe true
     }
 }
