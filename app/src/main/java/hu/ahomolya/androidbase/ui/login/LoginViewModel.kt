@@ -4,6 +4,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
 interface LoginViewModel {
+    val loginInProgress: StateFlow<Boolean>
+
     /**
      * The current value of the username field.
      */
