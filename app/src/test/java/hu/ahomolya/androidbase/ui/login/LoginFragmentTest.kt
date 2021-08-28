@@ -19,7 +19,10 @@ import hu.ahomolya.androidbase.ui.login.impl.LoginViewModelImpl
 import io.kotest.matchers.collections.shouldContain
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
-import io.mockk.*
+import io.mockk.clearAllMocks
+import io.mockk.every
+import io.mockk.mockk
+import io.mockk.verify
 import kotlinx.coroutines.flow.MutableStateFlow
 import org.hamcrest.CoreMatchers.not
 import org.junit.Before
@@ -32,11 +35,10 @@ import org.junit.runner.RunWith
 class LoginFragmentTest : BaseRobolectricTest() {
     @BindValue
     @JvmField
-    val loginViewModel = mockk<LoginViewModelImpl> {
+    val loginViewModel = mockk<LoginViewModelImpl>(relaxUnitFun = true) {
         every { username } returns MutableStateFlow("")
         every { password } returns MutableStateFlow("")
         every { enableLogin } returns MutableStateFlow(false)
-        justRun { login() }
     }
 
     @Before

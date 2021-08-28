@@ -43,6 +43,9 @@ android {
 
 dependencies {
     implementation Libs.core_ktx
+    implementation Libs.kotlinx_coroutines_core_jvm
+    implementation Libs.kotlinx_coroutines_android
+    implementation Libs.retrofit
 
     implementation Libs.hilt_android
     kapt Libs.hilt_compiler
@@ -51,4 +54,7 @@ dependencies {
     testImplementation Libs.junit_ktx
     testImplementation Libs.androidx_test_ext_junit
     testImplementation Libs.kotest_assertions_core
+    testImplementation Libs.mockk
+    testImplementation Libs.kotlinx_coroutines_test
+    testImplementation Libs.kotlin_reflect
 }

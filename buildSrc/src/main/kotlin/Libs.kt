@@ -63,6 +63,8 @@ public object Libs {
 
     public const val timber: String = "com.jakewharton.timber:timber:_"
 
+    public const val retrofit: String = "com.squareup.retrofit2:retrofit:_"
+
     public const val de_fayard_buildsrclibs_gradle_plugin: String =
             "de.fayard.buildSrcLibs:de.fayard.buildSrcLibs.gradle.plugin:_"
 
@@ -78,6 +80,8 @@ public object Libs {
             "org.jetbrains.kotlin:kotlin-annotation-processing-gradle:_"
 
     public const val kotlin_gradle_plugin: String = "org.jetbrains.kotlin:kotlin-gradle-plugin:_"
+
+    public const val kotlin_reflect: String = "org.jetbrains.kotlin:kotlin-reflect:_"
 
     public const val kotlinx_coroutines_android: String =
             "org.jetbrains.kotlinx:kotlinx-coroutines-android:_"
