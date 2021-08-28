@@ -5,7 +5,7 @@ import retrofit2.http.FormUrlEncoded
 import retrofit2.http.POST
 
 internal interface LoginApi {
-    @POST
+    @POST("/idp/api/v1/token")
     @FormUrlEncoded
     suspend fun login(
         @Field("username") username: String,

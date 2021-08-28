@@ -8,6 +8,7 @@ import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.action.ViewActions.replaceText
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
+import androidx.test.espresso.matcher.ViewMatchers.Visibility.GONE
 import androidx.test.espresso.matcher.ViewMatchers.Visibility.VISIBLE
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import dagger.hilt.android.testing.BindValue
@@ -40,6 +41,7 @@ class LoginFragmentTest : BaseRobolectricTest() {
         every { username } returns MutableStateFlow("")
         every { password } returns MutableStateFlow("")
         every { enableLogin } returns MutableStateFlow(false)
+        every { loginInProgress } returns MutableStateFlow(false)
         every { login() } returns Job()
     }
 
@@ -141,6 +143,33 @@ class LoginFragmentTest : BaseRobolectricTest() {
             onView(withId(R.id.login_button)).perform(click())
 
             verify { loginViewModel.login() }
+        }
+    }
+
+    @Test
+    fun `progress bar is shown while login is in progress`() {
+        activityRule.scenario.onActivity {
+            loginViewModel.loginInProgress.value = false
+            onView(withId(R.id.progress_bar)).check(matches(withEffectiveVisibility(GONE)))
+
+            loginViewModel.loginInProgress.value = true
+            onView(withId(R.id.progress_bar)).check(matches(withEffectiveVisibility(VISIBLE)))
+        }
+    }
+
+    @Test
+    fun `input fields are disabled while login is in progress`() {
+        activityRule.scenario.onActivity {
+            (loginViewModel.enableLogin as MutableStateFlow).value = true
+            loginViewModel.loginInProgress.value = false
+            onView(withId(R.id.username_field)).check(matches(isEnabled()))
+            onView(withId(R.id.password_field)).check(matches(isEnabled()))
+            onView(withId(R.id.login_button)).check(matches(isEnabled()))
+
+            loginViewModel.loginInProgress.value = true
+            onView(withId(R.id.password_field)).check(matches(not(isEnabled())))
+            onView(withId(R.id.username_field)).check(matches(not(isEnabled())))
+            onView(withId(R.id.login_button)).check(matches(not(isEnabled())))
         }
     }
 }

@@ -10,7 +10,7 @@ import retrofit2.http.POST
 class LoginApiTest : BaseUnitTest() {
     @Test
     fun `correct annotations on login method`() {
-        LoginApi::login.annotations.any { it is POST } shouldBe true
+        LoginApi::login.annotations.any { it is POST && it.value == "/idp/api/v1/token" } shouldBe true
         LoginApi::login.annotations.any { it is FormUrlEncoded } shouldBe true
         LoginApi::login.parameters.any { param -> param.annotations.any { it is Field && it.value == "username" } } shouldBe true
         LoginApi::login.parameters.any { param -> param.annotations.any { it is Field && it.value == "password" } } shouldBe true

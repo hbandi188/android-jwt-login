@@ -5,6 +5,8 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
             name="viewmodel"
             type="hu.ahomolya.androidbase.ui.login.LoginViewModel" />
@@ -32,6 +34,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/form_field_margin"
             android:autofillHints="username"
+            android:enabled="@{!viewmodel.loginInProgress}"
             android:hint="@string/username"
             android:inputType="text"
             android:text="@={viewmodel.username}"
@@ -45,6 +48,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/form_field_margin"
             android:autofillHints="password"
+            android:enabled="@{!viewmodel.loginInProgress}"
             android:hint="@string/password"
             android:inputType="text|textPassword"
             android:text="@={viewmodel.password}"
@@ -57,7 +61,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/form_field_margin"
-            android:enabled="@{viewmodel.enableLogin}"
+            android:enabled="@{viewmodel.enableLogin &amp;&amp; !viewmodel.loginInProgress}"
             android:onClick="@{() -> viewmodel.login()}"
             android:text="@string/login_button"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -65,6 +69,17 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/password_field" />
+
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            android:visibility="@{viewmodel.loginInProgress ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
