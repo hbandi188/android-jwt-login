@@ -38,6 +38,8 @@ public object Libs {
 
     public const val navigation_ui_ktx: String = "androidx.navigation:navigation-ui-ktx:_"
 
+    public const val security_crypto: String = "androidx.security:security-crypto:_"
+
     public const val espresso_core: String = "androidx.test.espresso:espresso-core:_"
 
     public const val androidx_test_ext_junit: String = "androidx.test.ext:junit:_"
@@ -71,6 +73,9 @@ public object Libs {
 
     public const val de_fayard_buildsrclibs_gradle_plugin: String =
             "de.fayard.buildSrcLibs:de.fayard.buildSrcLibs.gradle.plugin:_"
+
+    public const val detekt_gradle_plugin: String =
+            "io.gitlab.arturbosch.detekt:detekt-gradle-plugin:_"
 
     public const val kotest_assertions_core: String = "io.kotest:kotest-assertions-core:_"
 

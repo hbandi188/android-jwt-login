@@ -9,5 +9,14 @@
         android:id="@+id/loginFragment"
         android:name="hu.ahomolya.androidbase.ui.login.LoginFragment"
         android:label="LoginFragment"
-        tools:layout="@layout/fragment_login" />
+        tools:layout="@layout/fragment_login">
+        <action
+            android:id="@+id/goToHomeScreen"
+            app:destination="@id/homeFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="hu.ahomolya.androidbase.ui.home.HomeFragment"
+        android:label="HomeFragment" />
 </navigation>
