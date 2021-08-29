@@ -11,9 +11,12 @@ Primary tech stack:
 - Retrofit
 - Moshi
 - Kotest
+- MockK
 - Robolectric
 
 # Building and running
+
+Client Id is hidden in `app/src/main/cpp/native-lib.cpp`.
 
 Project should be simply opened in Android Studio (Arctic Fox or later version).
 
