@@ -7,15 +7,21 @@ import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.action.ViewActions.replaceText
 import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.espresso.matcher.ViewMatchers.Visibility.GONE
 import androidx.test.espresso.matcher.ViewMatchers.Visibility.VISIBLE
+import androidx.test.espresso.matcher.ViewMatchers.isEnabled
+import androidx.test.espresso.matcher.ViewMatchers.withEffectiveVisibility
+import androidx.test.espresso.matcher.ViewMatchers.withHint
+import androidx.test.espresso.matcher.ViewMatchers.withId
+import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.UninstallModules
 import hu.ahomolya.androidbase.BaseRobolectricTest
 import hu.ahomolya.androidbase.R
+import hu.ahomolya.androidbase.di.DiQualifiers.NavigationChannel
+import hu.ahomolya.androidbase.model.NavigationCommand
 import hu.ahomolya.androidbase.ui.login.impl.LoginViewModelImpl
 import io.kotest.matchers.collections.shouldContain
 import io.kotest.matchers.nulls.shouldNotBeNull
@@ -25,16 +31,23 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.test.runBlockingTest
 import org.hamcrest.CoreMatchers.not
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import javax.inject.Inject
 
 @HiltAndroidTest
 @RunWith(AndroidJUnit4::class)
 @UninstallModules(LoginModule::class)
 class LoginFragmentTest : BaseRobolectricTest() {
+    @NavigationChannel
+    @Inject
+    lateinit var navigationChannel: Channel<NavigationCommand>
+
     @BindValue
     @JvmField
     val loginViewModel = mockk<LoginViewModelImpl>(relaxUnitFun = true) {
@@ -48,6 +61,7 @@ class LoginFragmentTest : BaseRobolectricTest() {
     @Before
     fun setup() {
         clearAllMocks(answers = false)
+        hiltRule.inject()
     }
 
     @Test
@@ -170,6 +184,15 @@ class LoginFragmentTest : BaseRobolectricTest() {
             onView(withId(R.id.password_field)).check(matches(not(isEnabled())))
             onView(withId(R.id.username_field)).check(matches(not(isEnabled())))
             onView(withId(R.id.login_button)).check(matches(not(isEnabled())))
+        }
+    }
+
+    @Test
+    fun `check navigation to home fragment`() = runBlockingTest {
+        navigationChannel.send(NavigationCommand.Resource(R.id.goToHomeScreen))
+
+        activityRule.scenario.onActivity {
+            onView(withId(R.id.homeScreenTitle)).check(matches(withEffectiveVisibility(VISIBLE)))
         }
     }
 }

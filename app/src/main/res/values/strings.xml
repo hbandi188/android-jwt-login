@@ -5,4 +5,5 @@
     <string name="username">Username</string>
     <string name="password">Password</string>
     <string name="login_button">Login</string>
+    <string name="home_screen_title">Home screen</string>
 </resources>
