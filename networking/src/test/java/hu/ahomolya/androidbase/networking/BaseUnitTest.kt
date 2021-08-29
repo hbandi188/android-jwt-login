@@ -14,4 +14,7 @@ abstract class BaseUnitTest {
         Dispatchers.setMain(testCoroutineDispatcher)
         MockKAnnotations.init(this, relaxUnitFun = true)
     }
+
+    protected fun loadFile(filename: String): String =
+        this::class.java.classLoader?.getResource(filename)?.readText() ?: error("Failed to load $filename.")
 }

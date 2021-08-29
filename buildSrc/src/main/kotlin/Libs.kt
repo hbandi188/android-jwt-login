@@ -63,6 +63,10 @@ public object Libs {
 
     public const val timber: String = "com.jakewharton.timber:timber:_"
 
+    public const val moshi: String = "com.squareup.moshi:moshi:_"
+
+    public const val moshi_kotlin_codegen: String = "com.squareup.moshi:moshi-kotlin-codegen:_"
+
     public const val retrofit: String = "com.squareup.retrofit2:retrofit:_"
 
     public const val de_fayard_buildsrclibs_gradle_plugin: String =
