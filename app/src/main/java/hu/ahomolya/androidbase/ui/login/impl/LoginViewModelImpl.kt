@@ -27,7 +27,9 @@ class LoginViewModelImpl @Inject constructor(
 
     init {
         startupJob = viewModelScope.launch {
+            loginInProgress.value = true
             refreshTokenUseCase.attemptRefresh()
+            loginInProgress.value = false
         }
     }
 

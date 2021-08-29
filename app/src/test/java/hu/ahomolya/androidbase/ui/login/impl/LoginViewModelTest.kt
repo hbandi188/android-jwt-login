@@ -16,6 +16,7 @@ import kotlinx.coroutines.flow.SharingStarted.Companion.Eagerly
 import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Before
+import org.junit.Ignore
 import org.junit.Test
 
 class LoginViewModelTest : BaseUnitTest() {
@@ -79,5 +80,20 @@ class LoginViewModelTest : BaseUnitTest() {
         tested.startupJob.join()
 
         coVerify { refreshTokenUseCase.attemptRefresh() }
+    }
+
+    @Ignore("pauseDispatcher doesn't really work as advertised...")
+    @Test
+    fun `shows progress indicator while token extension is in progress`() = runBlockingTest {
+        pauseDispatcher {
+            val tested = LoginViewModelImpl(loginUseCase, refreshTokenUseCase)
+            val history = tested.loginInProgress.shareIn(CoroutineScope(testCoroutineDispatcher), Eagerly, replay = Int.MAX_VALUE)
+
+            advanceUntilIdle()
+            tested.startupJob.join()
+
+            testCoroutineDispatcher.advanceUntilIdle()
+            history.replayCache shouldEndWith listOf(false, true, false)
+        }
     }
 }
