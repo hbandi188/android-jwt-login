@@ -5,7 +5,7 @@ import dagger.hilt.android.testing.HiltAndroidRule
 import org.junit.Rule
 
 @Suppress("LeakingThis")
-abstract class BaseRobolectricTest {
+open class BaseRobolectricTest {
     @get:Rule
     val activityRule = ActivityScenarioRule(NavHostActivity::class.java)
 

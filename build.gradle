@@ -9,6 +9,7 @@ buildscript {
         classpath Libs.kotlin_gradle_plugin
         classpath Libs.navigation_safe_args_gradle_plugin
         classpath Libs.hilt_android_gradle_plugin
+        classpath "io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.18.0"
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -21,6 +22,10 @@ allprojects {
                 "-Xopt-in=kotlinx.coroutines.ExperimentalCoroutinesApi"
         ]
     }
+}
+
+subprojects {
+    apply from: '../detekt.gradle'
 }
 
 task clean(type: Delete) {

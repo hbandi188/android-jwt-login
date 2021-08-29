@@ -6,7 +6,7 @@ import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.setMain
 import org.junit.Before
 
-abstract class BaseUnitTest {
+open class BaseUnitTest {
     val testCoroutineDispatcher = TestCoroutineDispatcher()
 
     @Before
