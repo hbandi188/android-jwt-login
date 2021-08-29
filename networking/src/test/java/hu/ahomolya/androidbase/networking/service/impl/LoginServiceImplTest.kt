@@ -14,8 +14,14 @@ import io.mockk.impl.annotations.InjectMockKs
 import io.mockk.impl.annotations.MockK
 import io.mockk.verify
 import kotlinx.coroutines.test.runBlockingTest
+import okhttp3.ResponseBody
+import okio.IOException
 import org.junit.Before
 import org.junit.Test
+import retrofit2.HttpException
+import retrofit2.Response
+import java.net.HttpURLConnection.HTTP_INTERNAL_ERROR
+import java.net.HttpURLConnection.HTTP_UNAUTHORIZED
 
 internal class LoginServiceImplTest : BaseUnitTest() {
     @MockK
@@ -35,7 +41,6 @@ internal class LoginServiceImplTest : BaseUnitTest() {
 
     @Test
     fun `should call API with username and password`() = runBlockingTest {
-
         tested.login("username", "password")
 
         coVerify {
@@ -52,8 +57,6 @@ internal class LoginServiceImplTest : BaseUnitTest() {
 
     @Test
     fun `should return the tokens it receives from the Api`() = runBlockingTest {
-        every { secretsProvider.getClientId() } returns "clientId"
-
         val tokenResponse = TokenResponse("accessToken", "tokenType", 42, "refreshToken")
         coEvery { loginApi.login(any(), any(), any(), any()) } returns tokenResponse
 
@@ -61,5 +64,39 @@ internal class LoginServiceImplTest : BaseUnitTest() {
 
         result.shouldBeInstanceOf<LoginResult.Success>()
         result.tokens shouldBe tokenResponse
+    }
+
+    @Test
+    fun `should return error result for network errors`() = runBlockingTest {
+        coEvery { loginApi.login(any(), any(), any(), any()) } throws IOException("Broken network.")
+
+        val result = tested.login("username", "password")
+
+        result.shouldBeInstanceOf<LoginResult.NetworkError>()
+        result.cause.shouldBeInstanceOf<IOException>()
+    }
+
+    @Test
+    fun `should return specific result for HTTP exceptions`() = runBlockingTest {
+        coEvery { loginApi.login(any(), any(), any(), any()) } throws HttpException(
+            Response.error<Unit>(HTTP_INTERNAL_ERROR, ResponseBody.create(null, "")),
+        )
+
+        val result = tested.login("username", "password")
+
+        result.shouldBeInstanceOf<LoginResult.HttpError>()
+        result.code shouldBe HTTP_INTERNAL_ERROR
+    }
+
+
+    @Test
+    fun `should return specific result for unauthorized scenarios`() = runBlockingTest {
+        coEvery { loginApi.login(any(), any(), any(), any()) } throws HttpException(
+            Response.error<Unit>(HTTP_UNAUTHORIZED, ResponseBody.create(null, "")),
+        )
+
+        val result = tested.login("username", "password")
+
+        result.shouldBeInstanceOf<LoginResult.Unauthorized>()
     }
 }
