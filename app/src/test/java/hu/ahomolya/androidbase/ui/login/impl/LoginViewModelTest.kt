@@ -1,10 +1,10 @@
-package hu.ahomolya.androidbase.ui.login
+package hu.ahomolya.androidbase.ui.login.impl
 
 import hu.ahomolya.androidbase.BaseUnitTest
 import hu.ahomolya.androidbase.networking.model.LoginResult
 import hu.ahomolya.androidbase.networking.model.internal.TokenResponse
-import hu.ahomolya.androidbase.ui.login.impl.LoginViewModelImpl
 import hu.ahomolya.androidbase.usecases.LoginUseCase
+import hu.ahomolya.androidbase.usecases.RefreshTokenUseCase
 import io.kotest.matchers.collections.shouldEndWith
 import io.kotest.matchers.shouldBe
 import io.mockk.coEvery
@@ -14,6 +14,7 @@ import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.SharingStarted.Companion.Eagerly
 import kotlinx.coroutines.flow.shareIn
+import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Before
 import org.junit.Test
 
@@ -21,6 +22,9 @@ class LoginViewModelTest : BaseUnitTest() {
 
     @MockK
     lateinit var loginUseCase: LoginUseCase
+
+    @MockK
+    lateinit var refreshTokenUseCase: RefreshTokenUseCase
 
     @InjectMockKs
     lateinit var tested: LoginViewModelImpl
@@ -66,5 +70,14 @@ class LoginViewModelTest : BaseUnitTest() {
 
         testCoroutineDispatcher.advanceUntilIdle()
         history.replayCache shouldEndWith listOf(false, true, false)
+    }
+
+    @Test
+    fun `should attempt to refresh access token upon init`() = runBlockingTest {
+        // test subject is already constructed at this point
+
+        tested.startupJob.join()
+
+        coVerify { refreshTokenUseCase.attemptRefresh() }
     }
 }

@@ -5,6 +5,14 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
 interface LoginViewModel {
+    /**
+     * The asynchronous job that was launched when the implementation class was constructed.
+     */
+    val startupJob: Job
+
+    /**
+     * Whether there's work in progress.
+     */
     val loginInProgress: StateFlow<Boolean>
 
     /**

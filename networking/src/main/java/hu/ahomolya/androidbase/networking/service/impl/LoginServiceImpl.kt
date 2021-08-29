@@ -22,4 +22,17 @@ internal class LoginServiceImpl(
                     else -> LoginResult.NetworkError(throwable)
                 }
             }
+
+    override suspend fun refresh(refreshToken: String): LoginResult =
+        kotlin.runCatching { LoginResult.Success(loginApi.refresh(refreshToken, "refresh_token", secretsProvider.getClientId())) }
+            .getOrElse { throwable ->
+                when (throwable) {
+                    is HttpException -> when (throwable.code()) {
+                        HTTP_UNAUTHORIZED -> LoginResult.Unauthorized
+                        else -> LoginResult.HttpError(throwable.code())
+                    }
+                    else -> LoginResult.NetworkError(throwable)
+                }
+            }
+
 }

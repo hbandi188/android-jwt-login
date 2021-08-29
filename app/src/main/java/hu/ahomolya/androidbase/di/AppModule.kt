@@ -18,6 +18,7 @@ import hu.ahomolya.androidbase.provider.SecretsProviderImpl
 import hu.ahomolya.androidbase.store.PreferencesStore
 import hu.ahomolya.androidbase.store.impl.PreferencesStoreImpl
 import kotlinx.coroutines.channels.Channel
+import java.time.Clock
 import javax.inject.Singleton
 
 @Module
@@ -51,4 +52,7 @@ object AppModule {
             EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM,
         )
     }
+
+    @Provides
+    fun provideClock(): Clock = Clock.systemDefaultZone()
 }

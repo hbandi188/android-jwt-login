@@ -99,4 +99,64 @@ internal class LoginServiceImplTest : BaseUnitTest() {
 
         result.shouldBeInstanceOf<LoginResult.Unauthorized>()
     }
+
+    @Test
+    fun `refresh - should call API refresh token`() = runBlockingTest {
+        tested.refresh("refreshToken")
+
+        coVerify {
+            loginApi.refresh(
+                refreshToken = "refreshToken",
+                grantType = "refresh_token",
+                clientId = "clientId",
+            )
+        }
+
+        verify { secretsProvider.getClientId() }
+    }
+
+    @Test
+    fun `refresh - should return the tokens it receives from the Api`() = runBlockingTest {
+        val tokenResponse = TokenResponse("accessToken", "tokenType", 42, "refreshToken")
+        coEvery { loginApi.refresh(any(), any(), any()) } returns tokenResponse
+
+        val result = tested.refresh("refreshToken")
+
+        result.shouldBeInstanceOf<LoginResult.Success>()
+        result.tokens shouldBe tokenResponse
+    }
+
+    @Test
+    fun `refresh - should return error result for network errors`() = runBlockingTest {
+        coEvery { loginApi.refresh(any(), any(), any()) } throws IOException("Broken network.")
+
+        val result = tested.refresh("refreshToken")
+
+        result.shouldBeInstanceOf<LoginResult.NetworkError>()
+        result.cause.shouldBeInstanceOf<IOException>()
+    }
+
+    @Test
+    fun `refresh - should return specific result for HTTP exceptions`() = runBlockingTest {
+        coEvery { loginApi.refresh(any(), any(), any()) } throws HttpException(
+            Response.error<Unit>(HTTP_INTERNAL_ERROR, ResponseBody.create(null, "")),
+        )
+
+        val result = tested.refresh("refreshToken")
+
+        result.shouldBeInstanceOf<LoginResult.HttpError>()
+        result.code shouldBe HTTP_INTERNAL_ERROR
+    }
+
+
+    @Test
+    fun `refresh - should return specific result for unauthorized scenarios`() = runBlockingTest {
+        coEvery { loginApi.refresh(any(), any(), any()) } throws HttpException(
+            Response.error<Unit>(HTTP_UNAUTHORIZED, ResponseBody.create(null, "")),
+        )
+
+        val result = tested.refresh("refreshToken")
+
+        result.shouldBeInstanceOf<LoginResult.Unauthorized>()
+    }
 }

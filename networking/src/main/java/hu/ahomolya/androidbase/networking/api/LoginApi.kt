@@ -14,4 +14,12 @@ internal interface LoginApi {
         @Field("grant_type") grantType: String,
         @Field("client_id") clientId: String,
     ): TokenResponse
+
+    @POST("/idp/api/v1/token")
+    @FormUrlEncoded
+    suspend fun refresh(
+        @Field("refresh_token") refreshToken: String,
+        @Field("grant_type") grantType: String,
+        @Field("client_id") clientId: String,
+    ): TokenResponse
 }

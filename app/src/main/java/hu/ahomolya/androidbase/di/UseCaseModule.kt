@@ -8,7 +8,9 @@ import hu.ahomolya.androidbase.navigation.NavigationDispatcher
 import hu.ahomolya.androidbase.networking.service.LoginService
 import hu.ahomolya.androidbase.store.PreferencesStore
 import hu.ahomolya.androidbase.usecases.LoginUseCase
+import hu.ahomolya.androidbase.usecases.RefreshTokenUseCase
 import hu.ahomolya.androidbase.usecases.impl.LoginUseCaseImpl
+import hu.ahomolya.androidbase.usecases.impl.RefreshTokenUseCaseImpl
 import java.time.Clock
 
 @Module
@@ -24,5 +26,10 @@ object UseCaseModule {
         LoginUseCaseImpl(loginService, preferencesStore, clock, navigationDispatcher)
 
     @Provides
-    fun provideClock() = Clock.systemDefaultZone()
+    fun provideRefreshTokenUseCase(
+        preferencesStore: PreferencesStore,
+        loginService: LoginService,
+        clock: Clock,
+        navigationDispatcher: NavigationDispatcher,
+    ): RefreshTokenUseCase = RefreshTokenUseCaseImpl(preferencesStore, loginService, clock, navigationDispatcher)
 }
