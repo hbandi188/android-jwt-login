@@ -15,6 +15,7 @@ import androidx.test.espresso.matcher.ViewMatchers.withHint
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.google.android.material.textfield.TextInputLayout
 import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.UninstallModules
@@ -194,6 +195,14 @@ class LoginFragmentTest : BaseRobolectricTest() {
 
         activityRule.scenario.onActivity {
             onView(withId(R.id.homeScreenTitle)).check(matches(withEffectiveVisibility(VISIBLE)))
+        }
+    }
+
+    @Test
+    fun `password field can be revealed`() = runBlockingTest {
+        activityRule.scenario.onActivity { activity ->
+            val layout = activity.findViewById<TextInputLayout>(R.id.password_layout)
+            layout.endIconMode shouldBe TextInputLayout.END_ICON_PASSWORD_TOGGLE
         }
     }
 }
