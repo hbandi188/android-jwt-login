@@ -81,5 +81,12 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <hu.ahomolya.androidbase.ui.common.DialogRenderer
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:eventSource="@{viewmodel}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

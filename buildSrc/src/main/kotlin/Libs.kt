@@ -30,6 +30,8 @@ public object Libs {
 
     public const val viewbinding: String = "androidx.databinding:viewbinding:_"
 
+    public const val lifecycle_runtime_ktx: String = "androidx.lifecycle:lifecycle-runtime-ktx:_"
+
     public const val navigation_fragment_ktx: String =
             "androidx.navigation:navigation-fragment-ktx:_"
 

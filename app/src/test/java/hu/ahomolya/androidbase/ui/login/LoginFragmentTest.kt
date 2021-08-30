@@ -56,6 +56,7 @@ class LoginFragmentTest : BaseRobolectricTest() {
         every { enableLogin } returns MutableStateFlow(false)
         every { loginInProgress } returns MutableStateFlow(false)
         every { login() } returns Job()
+        every { dialogEvents } returns Channel()
     }
 
     @Before

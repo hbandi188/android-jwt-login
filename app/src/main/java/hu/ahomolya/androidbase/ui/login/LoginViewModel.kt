@@ -1,10 +1,11 @@
 package hu.ahomolya.androidbase.ui.login
 
+import hu.ahomolya.androidbase.contract.DialogEventSource
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
-interface LoginViewModel {
+interface LoginViewModel : DialogEventSource {
     /**
      * The asynchronous job that was launched when the implementation class was constructed.
      */

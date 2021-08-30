@@ -70,6 +70,7 @@ dependencies {
     implementation Libs.kotlinx_coroutines_android
     implementation Libs.security_crypto
     implementation Libs.moshi
+    implementation Libs.lifecycle_runtime_ktx
     kapt Libs.moshi_kotlin_codegen
 
     implementation Libs.hilt_android

@@ -6,4 +6,8 @@
     <string name="password">Password</string>
     <string name="login_button">Login</string>
     <string name="home_screen_title">Home screen</string>
+
+    <string name="error_unauthorized">Invalid username or password.</string>
+    <string name="error_network">Connection broken. Verify that you are connected to the internet.</string>
+    <string name="error_http">Unexpected error.</string>
 </resources>

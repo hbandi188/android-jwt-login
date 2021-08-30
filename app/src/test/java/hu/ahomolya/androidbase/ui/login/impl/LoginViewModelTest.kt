@@ -1,6 +1,7 @@
 package hu.ahomolya.androidbase.ui.login.impl
 
 import hu.ahomolya.androidbase.BaseUnitTest
+import hu.ahomolya.androidbase.R
 import hu.ahomolya.androidbase.networking.model.LoginResult
 import hu.ahomolya.androidbase.networking.model.internal.TokenResponse
 import hu.ahomolya.androidbase.usecases.LoginUseCase
@@ -13,11 +14,14 @@ import io.mockk.impl.annotations.InjectMockKs
 import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.SharingStarted.Companion.Eagerly
+import kotlinx.coroutines.flow.consumeAsFlow
 import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.test.runBlockingTest
+import okio.IOException
 import org.junit.Before
 import org.junit.Ignore
 import org.junit.Test
+import java.net.HttpURLConnection
 
 class LoginViewModelTest : BaseUnitTest() {
 
@@ -95,5 +99,50 @@ class LoginViewModelTest : BaseUnitTest() {
             testCoroutineDispatcher.advanceUntilIdle()
             history.replayCache shouldEndWith listOf(false, true, false)
         }
+    }
+
+    @Test
+    fun `should send dialog event when login fails due to invalid credentials`() = runBlockingTest {
+        coEvery { loginUseCase.login(any(), any()) } returns LoginResult.Unauthorized
+
+        tested.username.value = "username"
+        tested.password.value = "password"
+
+        val events = tested.dialogEvents.consumeAsFlow().shareIn(CoroutineScope(testCoroutineDispatcher), Eagerly, Int.MAX_VALUE)
+
+        tested.login().join()
+
+        testCoroutineDispatcher.advanceUntilIdle()
+        events.replayCache.last().message shouldBe R.string.error_unauthorized
+    }
+
+    @Test
+    fun `should send dialog event when login fails due to http error`() = runBlockingTest {
+        coEvery { loginUseCase.login(any(), any()) } returns LoginResult.HttpError(HttpURLConnection.HTTP_INTERNAL_ERROR)
+
+        tested.username.value = "username"
+        tested.password.value = "password"
+
+        val events = tested.dialogEvents.consumeAsFlow().shareIn(CoroutineScope(testCoroutineDispatcher), Eagerly, Int.MAX_VALUE)
+
+        tested.login().join()
+
+        testCoroutineDispatcher.advanceUntilIdle()
+        events.replayCache.last().message shouldBe R.string.error_http
+    }
+
+    @Test
+    fun `should send dialog event when login fails due to network issues`() = runBlockingTest {
+        coEvery { loginUseCase.login(any(), any()) } returns LoginResult.NetworkError(IOException())
+
+        tested.username.value = "username"
+        tested.password.value = "password"
+
+        val events = tested.dialogEvents.consumeAsFlow().shareIn(CoroutineScope(testCoroutineDispatcher), Eagerly, Int.MAX_VALUE)
+
+        tested.login().join()
+
+        testCoroutineDispatcher.advanceUntilIdle()
+        events.replayCache.last().message shouldBe R.string.error_network
     }
 }
